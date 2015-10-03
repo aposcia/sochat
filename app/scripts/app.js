@@ -1,63 +1,61 @@
-'use strict';
+(function () {
+    'use strict';
 
-/**
- * @ngdoc overview
- * @name Sochat
- * @description
- * # Initializes main application and routing
- *
- * Main module of the application.
- */
+    /**
+     * @ngdoc overview
+     * @name Sochat
+     * @description
+     * # Initializes main application and routing
+     *
+     * Main module of the application.
+     */
+    angular.module('Sochat', ['ionic', 'ngCordova', 'ngResource', 'firebase'])
 
+        .run(function ($ionicPlatform) {
 
-angular.module('Sochat', ['ionic', 'ngCordova', 'ngResource','firebase'])
+            $ionicPlatform.ready(function () {
+                // save to use plugins here
+            });
 
-  .run(function($ionicPlatform) {
+            // add possible global event handlers here
 
-    $ionicPlatform.ready(function() {
-      // save to use plugins here
-    });
+        })
 
-    // add possible global event handlers here
+        .config(function ($httpProvider, $stateProvider, $urlRouterProvider) {
+            // register $http interceptors, if any. e.g.
+            // $httpProvider.interceptors.push('interceptor-name');
 
-  })
-
-  .config(function($httpProvider, $stateProvider, $urlRouterProvider) {
-    // register $http interceptors, if any. e.g.
-    // $httpProvider.interceptors.push('interceptor-name');
-
-    // Application routing
-    $stateProvider
-      .state('app', {
-        url: '/app',
-        abstract: true,
-        templateUrl: 'templates/main.html',
-        controller: 'MainController'
-      })
-      .state('app.home', {
-        url: '/home',
-        cache: true,
-        views: {
-          'viewContent': {
-            templateUrl: 'templates/views/home.html',
-            controller: 'HomeController'
-          }
-        }
-      })
-      .state('app.settings', {
-        url: '/settings',
-        cache: true,
-        views: {
-          'viewContent': {
-            templateUrl: 'templates/views/settings.html',
-            controller: 'SettingsController'
-          }
-        }
-      });
-
-
-    // redirects to default route for undefined routes
-    $urlRouterProvider.otherwise('/app/home');
-  });
+            // Application routing
+            $stateProvider
+                .state('app', {
+                    url: '/app',
+                    abstract: true,
+                    templateUrl: 'templates/main.html',
+                    controller: 'MainController'
+                })
+                .state('app.home', {
+                    url: '/home',
+                    cache: true,
+                    views: {
+                        'viewContent': {
+                            templateUrl: 'templates/views/home.html',
+                            controller: 'HomeController'
+                        }
+                    }
+                })
+                .state('app.settings', {
+                    url: '/settings',
+                    cache: true,
+                    views: {
+                        'viewContent': {
+                            templateUrl: 'templates/views/settings.html',
+                            controller: 'SettingsController'
+                        }
+                    }
+                });
 
 
+            // redirects to default route for undefined routes
+            $urlRouterProvider.otherwise('/app/home');
+        });
+})();
