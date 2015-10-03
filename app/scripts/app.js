@@ -11,13 +11,21 @@
 
 angular.module('Sochat', ['ionic', 'ngCordova', 'ngResource','firebase'])
 
-  .run(function($ionicPlatform) {
+  .run(function($ionicPlatform,$rootScope,CommonProp,$state) {
 
     $ionicPlatform.ready(function() {
       // save to use plugins here
     });
 
-    // add possible global event handlers here
+        //stateChange event
+        $rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) {
+
+            if (toState.authRequired && CommonProp.getUser() == undefined ) { //Assuming the AuthService holds authentication logic
+                // User isn’t authenticated
+                $state.transitionTo("app.login");
+                event.preventDefault();
+            }
+        });
 
   })
 
@@ -71,12 +79,35 @@ angular.module('Sochat', ['ionic', 'ngCordova', 'ngResource','firebase'])
                     controller: 'RegisterController'
                 }
             }
+        }).state('app.profile', {
+            url: '/profile',
+            cache: true,
+            views: {
+                'viewContent': {
+                    templateUrl: 'templates/views/profile.html',
+                    controller: 'ProfileController'
+                }
+            },
+            authRequired: true
+
         });
 
 
     // redirects to default route for undefined routes
     $urlRouterProvider.otherwise('/app/home');
 
-  }).constant('FBURL', 'https://sochat.firebaseio.com/');
+  }).constant('FBURL', 'https://sochat.firebaseio.com/')
+    .service('CommonProp', function() {
+        var user = null;
+        return {
+            getUser: function() {
+                return this.user;
+            },
+            setUser: function(value) {
+                console.log("Setting user..." +value);
+                this.user = value;
+            }
+        };
+    });
 
 

@@ -24,13 +24,17 @@
                     <i class="icon ion-settings"></i>
                     Settings
                 </a>
-            <!--    <a menu-close class="item item-icon-left" ui-sref-active="active" ui-sref="app.login">
+               <a menu-close class="item item-icon-left" ui-sref-active="active" ui-sref="app.login">
                     <i class="icon ion-android-person"></i>
-                    Sign-in
-                </a>-->
+                    Login
+                </a>
                 <a menu-close class="item item-icon-left" ui-sref-active="active" ui-sref="app.signup">
                     <i class="icon ion-android-person"></i>
                     Sign-up
+                </a>
+                <a ng-show="CommonProp.getUser() != null" menu-close class="item item-icon-left" ui-sref-active="active" ui-sref="app.profile">
+                    <i class="icon ion-android-person"></i>
+                    Profile
                 </a>
             </div>
         </ion-content>
