@@ -57,9 +57,14 @@
                 };
 
                 sochatMessages.push(message);
-            }
+            };
 
+            var geoFire = new GeoFire(rootRef);
 
-
+            geoFire.set("some_key", [37.79, -122.41]).then(function() {
+                console.log("Provided key has been added to GeoFire");
+            }, function(error) {
+                console.log("Error: " + error);
+            });
         });
 })();
