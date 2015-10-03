@@ -10,8 +10,6 @@
     angular.module('Sochat')
         .controller('HomeController', function ($scope, ExampleService, $firebaseObject, $timeout, $cordovaGeolocation) {
 
-            console.log("home controller");
-
             $scope.messages = [];
             var rootRef = new Firebase('https://sochat.firebaseio.com/');
 
@@ -22,8 +20,7 @@
 
             var sochatMessages = rootRef.child('messages');
 
-
-            var posOptions = {timeout: 1000, enableHighAccuracy: true};
+            var posOptions = {timeout: 10000, enableHighAccuracy: true};
             $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
                 var lat  = position.coords.latitude;
                 var long = position.coords.longitude;
@@ -34,7 +31,7 @@
                 var geoFireMsg = new GeoFire(sochatMessagesPositions);
                 var geoQuery = geoFireMsg.query({
                     center: [position.coords.latitude, position.coords.longitude],
-                    radius: 10.5
+                    radius: 100
                 });
 
                 geoQuery.on("key_entered", function(key, location, distance) {
@@ -43,10 +40,15 @@
                         var message = dataSnapshot.val();
                         console.log(message);
                         $scope.messages.push(message);
-
                     });
                 }, function(error) {
                     console.log("Error2" + error);
+                });
+
+                geoQuery.on("key_exited", function(key, location, distance) {
+                    var messageId = key.split(":")[1];
+                    console.log("message not visible anymore: "+ messageId);
+
                 });
 
 
