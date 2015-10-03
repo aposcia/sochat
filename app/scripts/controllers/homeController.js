@@ -47,33 +47,43 @@
                 text: ""
             };
 
-            $scope.printMe = function(){
+            $scope.sendMessage = function(){
                 var sochatMessages = rootRef.child('messages');
+
+                var posOptions = {timeout: 1000, enableHighAccuracy: false};
+                $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
+                    var lat  = position.coords.latitude;
+                    var long = position.coords.longitude;
+                    console.log("lat: " + lat + ", long: " + long);
+                }, function(err) {
+                    console.log("Error" + err);
+                });
+
+
+
+
 
                 var message = {
                     name: $scope.form.object,
                     msg: $scope.form.text
                 };
 
-                sochatMessages.push(message);
+
+                ;
+
+                var geoFire = new GeoFire(sochatMessages.push(message));
+                geoFire.set("location", [37.79, -122.41]).then(function() {
+                    console.log("Provided key has been added to GeoFire");
+                }, function(error) {
+                    console.log("Error: " + error);
+                });
             };
 
-            var geoFire = new GeoFire(rootRef);
 
-            geoFire.set("some_key", [37.79, -122.41]).then(function() {
-                console.log("Provided key has been added to GeoFire");
-            }, function(error) {
-                console.log("Error: " + error);
-            });
 
-            var posOptions = {timeout: 1000, enableHighAccuracy: false};
-            $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
-                var lat  = position.coords.latitude;
-                var long = position.coords.longitude;
-                console.log("lat: " + lat);
-            }, function(err) {
-                console.log("Error" + err);
-            });
+
+
+
 
 
         });
