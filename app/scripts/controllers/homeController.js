@@ -25,9 +25,9 @@
                 sochatMessages.push(message);
             };
 
-            $scope.deleteMessage = function (id){
-                console.log(id);
-            }
+            $scope.deleteMessage = function (){
+                console.log("test");
+            };
 
             var sochatMessages = rootRef.child('messages');
 

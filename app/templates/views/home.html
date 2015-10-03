@@ -20,7 +20,7 @@
        <ion-list>
          <ion-item ng-repeat="message in messages">
              {{ message.name }} - {{  message.msg }}
-             <button class="button button-positive" onclick="deleteMessage(5)">
+             <button class="button button-positive" ng-click="deleteMessage(5)">
                  <i class="icon ion-android-delete"></i>
              </button>
          </ion-item>
