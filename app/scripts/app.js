@@ -1,61 +1,82 @@
-(function () {
-    'use strict';
+'use strict';
 
-    /**
-     * @ngdoc overview
-     * @name Sochat
-     * @description
-     * # Initializes main application and routing
-     *
-     * Main module of the application.
-     */
-    angular.module('Sochat', ['ionic', 'ngCordova', 'ngResource', 'firebase'])
+/**
+ * @ngdoc overview
+ * @name Sochat
+ * @description
+ * # Initializes main application and routing
+ *
+ * Main module of the application.
+ */
 
-        .run(function ($ionicPlatform) {
+angular.module('Sochat', ['ionic', 'ngCordova', 'ngResource','firebase'])
 
-            $ionicPlatform.ready(function () {
-                // save to use plugins here
-            });
+  .run(function($ionicPlatform) {
 
-            // add possible global event handlers here
+    $ionicPlatform.ready(function() {
+      // save to use plugins here
+    });
 
-        })
+    // add possible global event handlers here
 
-        .config(function ($httpProvider, $stateProvider, $urlRouterProvider) {
-            // register $http interceptors, if any. e.g.
-            // $httpProvider.interceptors.push('interceptor-name');
+  })
 
-            // Application routing
-            $stateProvider
-                .state('app', {
-                    url: '/app',
-                    abstract: true,
-                    templateUrl: 'templates/main.html',
-                    controller: 'MainController'
-                })
-                .state('app.home', {
-                    url: '/home',
-                    cache: true,
-                    views: {
-                        'viewContent': {
-                            templateUrl: 'templates/views/home.html',
-                            controller: 'HomeController'
-                        }
-                    }
-                })
-                .state('app.settings', {
-                    url: '/settings',
-                    cache: true,
-                    views: {
-                        'viewContent': {
-                            templateUrl: 'templates/views/settings.html',
-                            controller: 'SettingsController'
-                        }
-                    }
-                });
+  .config(function($httpProvider, $stateProvider, $urlRouterProvider) {
+    // register $http interceptors, if any. e.g.
+    // $httpProvider.interceptors.push('interceptor-name');
 
-
-            // redirects to default route for undefined routes
-            $urlRouterProvider.otherwise('/app/home');
+    // Application routing
+    $stateProvider
+      .state('app', {
+        url: '/app',
+        abstract: true,
+        templateUrl: 'templates/main.html',
+        controller: 'MainController'
+      })
+      .state('app.home', {
+        url: '/home',
+        cache: true,
+        views: {
+          'viewContent': {
+            templateUrl: 'templates/views/home.html',
+            controller: 'HomeController'
+          }
+        }
+      })
+      .state('app.settings', {
+        url: '/settings',
+        cache: true,
+        views: {
+          'viewContent': {
+            templateUrl: 'templates/views/settings.html',
+            controller: 'SettingsController'
+          }
+        }
+      })
+        .state('app.login', {
+            url: '/login',
+            cache: true,
+            views: {
+                'viewContent': {
+                    templateUrl: 'templates/views/login.html',
+                    controller: 'LoginController'
+                }
+            }
+        }).state('app.signup', {
+            url: '/signup',
+            cache: true,
+            views: {
+                'viewContent': {
+                    templateUrl: 'templates/views/register.html',
+                    controller: 'RegisterController'
+                }
+            }
         });
-})();
+
+
+    // redirects to default route for undefined routes
+    $urlRouterProvider.otherwise('/app/home');
+
+  }).constant('FBURL', 'https://sochat.firebaseio.com/');
+
+

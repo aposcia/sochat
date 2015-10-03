@@ -3,5 +3,8 @@
     "bower_components/angular-resource/angular-resource.js",
     "bower_components/lodash/lodash.js",
     "bower_components/ngCordova/dist/ng-cordova.js",
+    "bower_components/firebase/firebase-debug.js",
+    "bower_components/angularfire/dist/angularfire.js",
+    "bower_components/geofire/dist/geofire.js",
     "bower_components/rsvp/rsvp.js"
 ]
