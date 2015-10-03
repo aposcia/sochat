@@ -18,9 +18,9 @@
        <button class="button" ng-click="addMessage()">Créer</button>
 
        <ion-list>
-         <ion-item ng-repeat="message in messages">
-             {{ message.name }} - {{  message.msg }}
-             <button class="button button-positive" ng-click="deleteMessage(5)">
+         <ion-item ng-repeat="(id, message) in messages">
+             {{ message.name }} - {{  message.msg }} - {{id}}
+             <button class="button button-positive" ng-click="deleteMessage(id)">
                  <i class="icon ion-android-delete"></i>
              </button>
          </ion-item>
