@@ -15,10 +15,15 @@
 
         </ion-refresher>
 
-       <button class="button" ng-click="doStuff()">Créer</button>
+       <button class="button" ng-click="addMessage()">Créer</button>
 
        <ion-list>
-         <ion-item ng-repeat="message in messages">{{ message.name }} - {{  message.msg }}</ion-item>
+         <ion-item ng-repeat="message in messages">
+             {{ message.name }} - {{  message.msg }}
+             <button class="button button-positive" onclick="deleteMessage(5)">
+                 <i class="icon ion-android-delete"></i>
+             </button>
+         </ion-item>
        </ion-list>
 
         <div class="loader" ng-if="!myHTML">

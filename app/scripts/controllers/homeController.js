@@ -12,10 +12,10 @@
 
             console.log("home controller");
 
-            var rootRef = new Firebase('https://incandescent-heat-3271.firebaseio.com/');
+            var rootRef = new Firebase('https://sochat.firebaseio.com/');
 
-            $scope.doStuff = function () {
-                var sochatMessages = rootRef.child('sochatmsgs');
+            $scope.addMessage = function () {
+                var sochatMessages = rootRef.child('messages');
 
                 var message = {
                     name: "diego",
@@ -25,7 +25,11 @@
                 sochatMessages.push(message);
             };
 
-            var sochatMessages = rootRef.child('sochatmsgs');
+            $scope.deleteMessage = function (id){
+                console.log(id);
+            }
+
+            var sochatMessages = rootRef.child('messages');
 
             sochatMessages.on('value', function (snapshot) {
                 $timeout(function () {
@@ -52,13 +56,14 @@
 
             // just an example...
             $scope.fetchRandomText = function () {
-                ExampleService.doSomethingAsync()
+                /*ExampleService.doSomethingAsync()
                     .then(ExampleService.fetchSomethingFromServer)
                     .then(function (response) {
                         $scope.myHTML = response.data.text;
                         // close pull to refresh loader
                         $scope.$broadcast('scroll.refreshComplete');
-                    });
+                    });*/
+                $scope.myHTML = "Tagada";
             };
 
             $scope.fetchRandomText();
