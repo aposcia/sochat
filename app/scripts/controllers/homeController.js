@@ -8,7 +8,7 @@
      * # HomeController
      */
     angular.module('Sochat')
-        .controller('HomeController', function ($scope, ExampleService, $firebaseObject, $timeout) {
+        .controller('HomeController', function ($scope, ExampleService, $firebaseObject, $timeout, $cordovaGeolocation) {
 
             console.log("home controller");
 
@@ -42,7 +42,6 @@
 
             });
 
-
             $scope.form = {
                 object: "",
                 text: ""
@@ -66,5 +65,16 @@
             }, function(error) {
                 console.log("Error: " + error);
             });
+
+            var posOptions = {timeout: 1000, enableHighAccuracy: false};
+            $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
+                var lat  = position.coords.latitude;
+                var long = position.coords.longitude;
+                console.log("lat: " + lat);
+            }, function(err) {
+                console.log("Error" + err);
+            });
+
+
         });
 })();
