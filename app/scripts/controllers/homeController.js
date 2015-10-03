@@ -10,20 +10,8 @@
     angular.module('Sochat')
         .controller('HomeController', function ($scope, ExampleService, $firebaseObject, $timeout, $cordovaGeolocation) {
 
-            console.log("home controller");
-
+            $scope.messages = [];
             var rootRef = new Firebase('https://sochat.firebaseio.com/');
-
-            $scope.addMessage = function () {
-                var sochatMessages = rootRef.child('messages');
-
-                var message = {
-                    name: "diego",
-                    msg: "Hello world"
-                };
-
-                sochatMessages.push(message);
-            };
 
             $scope.deleteMessage = function (msgIdToDelete){
                 var sochatMessages = rootRef.child('messages').child(msgIdToDelete);
@@ -32,7 +20,46 @@
 
             var sochatMessages = rootRef.child('messages');
 
-            sochatMessages.on('value', function (snapshot) {
+            var posOptions = {timeout: 10000, enableHighAccuracy: true};
+            $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
+                var lat  = position.coords.latitude;
+                var long = position.coords.longitude;
+                console.log("lat : " + lat + ", long: " + long);
+
+
+                var sochatMessagesPositions = rootRef.child('messagesPositions');
+                var geoFireMsg = new GeoFire(sochatMessagesPositions);
+                var geoQuery = geoFireMsg.query({
+                    center: [position.coords.latitude, position.coords.longitude],
+                    radius: 100
+                });
+
+                geoQuery.on("key_entered", function(key, location, distance) {
+                    var messageId = key.split(":")[1];
+                    sochatMessages.child(messageId).once("value", function(dataSnapshot) {
+                        var message = dataSnapshot.val();
+                        console.log(message);
+                        $scope.messages.push(message);
+                    });
+                }, function(error) {
+                    console.log("Error2" + error);
+                });
+
+                geoQuery.on("key_exited", function(key, location, distance) {
+                    var messageId = key.split(":")[1];
+                    console.log("message not visible anymore: "+ messageId);
+
+                });
+
+
+            }, function(error) {
+                console.log("Error" + error);
+            });
+
+
+
+
+            /*sochatMessages.on('value', function (snapshot) {
                 $timeout(function () {
                     console.log(snapshot.val());
 
@@ -40,12 +67,14 @@
 
                 });
 
-            });
+            });*/
 
             $scope.form = {
                 object: "",
                 text: ""
             };
+
+
 
             $scope.sendMessage = function() {
                 var sochatMessages = rootRef.child('messages');
@@ -62,9 +91,11 @@
                     };
 
                     var sochatMessage = sochatMessages.push(message);
-                    var geoFire = new GeoFire(sochatMessage);
 
-                    geoFire.set("location", [lat, long]).then(function() {
+                    var sochatMessagesPositions = rootRef.child('messagesPositions');
+                    var geoFire = new GeoFire(sochatMessagesPositions);
+
+                    geoFire.set("location:"+sochatMessage.key(), [lat, long]).then(function() {
                         console.log("Provided key has been added to GeoFire");
                     }, function(error) {
                         console.log("Error: " + error);
