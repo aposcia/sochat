@@ -11,4 +11,5 @@ To run on your device
 
  * `$ gulp -r android`
  * `$ ionic platform add android`
+ * `$ ionic state reset`
  * `$ ionic resources` generates potential missing resources
