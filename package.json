@@ -50,7 +50,12 @@
   "scripts": {
     "gulp": "./node_modules/.bin/gulp"
   },
-  "cordovaPlugins": [],
+  "cordovaPlugins": [
+    {
+      "locator": "https://github.com/apache/cordova-plugin-whitelist.git",
+      "id": "cordova-plugin-whitelist"
+    }
+  ],
   "cordovaPlatforms": [
     "android"
   ]

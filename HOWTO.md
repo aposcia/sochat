@@ -10,4 +10,5 @@ That's it
 To run on your device
 
  * `$ gulp -r android`
+ * `$ ionic platform add android`
  * `$ ionic resources` generates potential missing resources
