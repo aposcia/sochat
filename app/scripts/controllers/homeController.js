@@ -26,7 +26,6 @@
             };
 
             $scope.deleteMessage = function (msgIdToDelete){
-
                 var sochatMessages = rootRef.child('messages').child(msgIdToDelete);
                 sochatMessages.remove();
             };
@@ -39,35 +38,28 @@
 
                     $scope.messages = snapshot.val();
 
-                    snapshot.forEach(function (item) {
-                        console.log(item.val());
-                    });
-
-
-                    /*$rootScope.courses = snapshot.val();
-                     $scope.courses = snapshot.val();
-                     console.log("Setting scope.courese...");
-                     console.log($scope.courses);*/
                 });
 
             });
 
-            console.log();
 
-            $scope.myHTML = null;
-
-            // just an example...
-            $scope.fetchRandomText = function () {
-                /*ExampleService.doSomethingAsync()
-                    .then(ExampleService.fetchSomethingFromServer)
-                    .then(function (response) {
-                        $scope.myHTML = response.data.text;
-                        // close pull to refresh loader
-                        $scope.$broadcast('scroll.refreshComplete');
-                    });*/
-                $scope.myHTML = "Tagada";
+            $scope.form = {
+                object: "",
+                text: ""
             };
 
-            $scope.fetchRandomText();
+            $scope.printMe = function(){
+                var sochatMessages = rootRef.child('messages');
+
+                var message = {
+                    name: $scope.form.object,
+                    msg: $scope.form.text
+                };
+
+                sochatMessages.push(message);
+            }
+
+
+
         });
 })();

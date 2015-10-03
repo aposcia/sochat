@@ -19,18 +19,32 @@
 
        <ion-list>
          <ion-item ng-repeat="(id, message) in messages">
-             {{ message.name }} - {{  message.msg }} - {{id}}
+             {{ message.name }} - {{  message.msg }}
              <button class="button button-positive" ng-click="deleteMessage(id)">
                  <i class="icon ion-android-delete"></i>
              </button>
          </ion-item>
        </ion-list>
 
+        <div class="list">
+            <label class="item item-input" >
+                <input type="text" placeholder="Object" ng-model="form.object">
+            </label>
+            <label class="item item-input" >
+                <textarea placeholder="Text" ng-model="form.text"></textarea>
+            </label>
+            <button class="button button-positive" ng-click="printMe()">
+                Send
+            </button>
+            </form>
+        </div>
+
+        <!--
         <div class="loader" ng-if="!myHTML">
             <ion-spinner></ion-spinner>
         </div>
         <div class="content" ng-bind-html="myHTML">
-
+        -->
 
 
         </div>
