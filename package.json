@@ -6,7 +6,7 @@
   "dependencies": {
     "geofire": "^3.2.2",
     "rsvp": "^3.1.0",
-    "wiredep": "^3.0.0-beta"
+    "wiredep": "^3.0.0-beta"   
   },
   "devDependencies": {
     "beepbeep": "^1.2.0",
